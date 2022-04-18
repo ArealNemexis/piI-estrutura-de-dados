@@ -1,0 +1,24 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./data:/var/lib/rabbitmq/
+    environment:
+      - RABBITMQ_DEFAULT_USER=birico
+      - RABBITMQ_DEFAULT_PASS=biricoseguro
+
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=birico
+      - POSTGRES_PASSWORD=biricoseguro
+    ports:
+      - 5432:5432
+    volumes: 
+      - ./db:/var/lib/postgresql/data
