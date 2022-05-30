@@ -24,7 +24,7 @@ public class EnqueuePendingTransaction {
         List<TransactionDTO> transactionDTOList = transactionService.getPendingTransactions();
 
         transactionDTOList.forEach(transactionDTO -> {
-            rabbitMQService.sendMessage(RabbitMQConstants.Q1, transactionDTO);
+            rabbitMQService.sendMessage(RabbitMQConstants.PENDING, transactionDTO);
         });
     }
 }

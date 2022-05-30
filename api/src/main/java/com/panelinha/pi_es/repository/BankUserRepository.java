@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface BankUserRepository extends JpaRepository<BankUserEntity, Long> {
 
-//    @Lock(LockModeType.PESSIMISTIC_WRITE)
 //    @Override
 //    Optional<BankUserEntity> findById(Long aLong);
+//    @Lock(LockModeType.PESSIMISTIC_WRITE)
     public Optional<BankUserEntity> findById(Long id);
 
 }

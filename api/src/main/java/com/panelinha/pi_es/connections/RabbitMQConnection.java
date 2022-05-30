@@ -41,8 +41,8 @@ public class RabbitMQConnection {
 
     @PostConstruct
     private void add(){
-        Queue q1 = this.queue(RabbitMQConstants.Q1);
-        Queue q2 = this.queue(RabbitMQConstants.Q2);
+        Queue q1 = this.queue(RabbitMQConstants.PENDING);
+        Queue q2 = this.queue(RabbitMQConstants.PROCESSING);
 
         DirectExchange exchange = this.directExchange();
 

@@ -19,8 +19,8 @@ public class MessageController {
     private RabbitMQService rabbitMQService;
 
     @PostMapping
-    public ResponseEntity changeMessage(@RequestBody MessageDTO messageDTO) {
-        this.rabbitMQService.sendMessage(RabbitMQConstants.Q1, messageDTO);
+    public ResponseEntity sendMessage(@RequestBody MessageDTO messageDTO) {
+        this.rabbitMQService.sendMessage(RabbitMQConstants.PENDING, messageDTO);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 }

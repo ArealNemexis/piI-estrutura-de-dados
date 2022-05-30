@@ -3,7 +3,7 @@ import requests
 from random import randint
 
 
-def generateTransaction(max: int):
+def generate_transaction(max: int):
     sender = randint(0, max)
     destiny = randint(0, max)
     while (sender == destiny):
@@ -24,4 +24,4 @@ except IndexError as e:
     print('A')
 else:
     for _ in range(NUM_OF_TRANSACTIONS):
-        requests.post(url=URL, json=generateTransaction(1000))
+        requests.post(url=URL, json=generate_transaction(100))

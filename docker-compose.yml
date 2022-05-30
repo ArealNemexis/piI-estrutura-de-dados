@@ -6,8 +6,8 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
-    volumes:
-      - ./data:/var/lib/rabbitmq/
+#    volumes:
+#      - ./data:/var/lib/rabbitmq/
     environment:
       - RABBITMQ_DEFAULT_USER=birico
       - RABBITMQ_DEFAULT_PASS=biricoseguro
@@ -20,5 +20,5 @@ services:
       - POSTGRES_PASSWORD=biricoseguro
     ports:
       - 5432:5432
-    volumes: 
-      - ./db:/var/lib/postgresql/data
+#    volumes:
+#      - ./db_data:/var/lib/postgresql/data
