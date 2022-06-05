@@ -21,25 +21,25 @@ public class MessageConsumer {
 //
 //    }
 
-    @RabbitListener(queues = RabbitMQConstants.PENDING,ackMode = "AUTO")
-    private void consumerPending(TransactionDTO transactionDTO, Channel channel) throws Exception {
-        transactionService.changeStatus(transactionDTO, StatusEnum.PROCESSING);
-        channel.basicGet(RabbitMQConstants.PENDING, true);
-    }
-
-    @RabbitListener(queues = RabbitMQConstants.PROCESSING,ackMode = "AUTO")
-    private void consumerProcess(TransactionDTO transactionDTO, Channel channel) throws Exception {
-        try{
-            transactionService.transaction(transactionDTO);
-
-        } catch (Exception e) {
-            System.out.println("Deu ruim, moio a favela");
-            transactionService.changeStatus(transactionDTO, StatusEnum.ERROR);
-        }
-        finally {
-            channel.basicGet(RabbitMQConstants.PROCESSING, true);
-
-        }
-
-    }
+//    @RabbitListener(queues = RabbitMQConstants.PENDING,ackMode = "AUTO")
+//    private void consumerPending(TransactionDTO transactionDTO, Channel channel) throws Exception {
+//        transactionService.changeStatus(transactionDTO, StatusEnum.PROCESSING);
+//        channel.basicGet(RabbitMQConstants.PENDING, true);
+//    }
+//
+//    @RabbitListener(queues = RabbitMQConstants.PROCESSING,ackMode = "AUTO")
+//    private void consumerProcess(TransactionDTO transactionDTO, Channel channel) throws Exception {
+//        try{
+//            transactionService.transaction(transactionDTO);
+//
+//        } catch (Exception e) {
+//            System.out.println("Erro ao processar pagamento");
+//            transactionService.changeStatus(transactionDTO, StatusEnum.ERROR);
+//        }
+//        finally {
+//            channel.basicGet(RabbitMQConstants.PROCESSING, true);
+//
+//        }
+//
+//    }
 }
