@@ -1,3 +1,5 @@
+version: '3'
+
 services:
   rabbitmq:
     image: rabbitmq:3-management
@@ -6,19 +8,91 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
+    networks:
+      - my-networks
 #    volumes:
 #      - ./data:/var/lib/rabbitmq/
     environment:
-      - RABBITMQ_DEFAULT_USER=birico
-      - RABBITMQ_DEFAULT_PASS=biricoseguro
+      - RABBITMQ_DEFAULT_USER=${RABBIT_USERNAME}
+      - RABBITMQ_DEFAULT_PASS=${RABBIT_PASSWORD}
+    env_file:
+      - .env
 
   db:
     image: postgres:14.1-alpine
     restart: always
     environment:
-      - POSTGRES_USER=birico
-      - POSTGRES_PASSWORD=biricoseguro
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
     ports:
-      - 5432:5432
-#    volumes:
-#      - ./db_data:/var/lib/postgresql/data
+      - ${DB_PORT}:${DB_PORT}
+    networks:
+      - my-networks
+    env_file:
+      - .env
+    volumes:
+      - ./postgres:/data/postgres
+
+
+  api1:
+    build: api/
+    hostname: api1
+    # restart: always 
+    networks:
+      - my-networks
+    environment:
+      - CREATE_DB=create
+    env_file:
+      - .env
+
+  api2:
+    build: api/
+    hostname: api2
+    # restart: always 
+    networks:
+      - my-networks
+    environment:
+      - CREATE_DB=none
+    env_file:
+      - .env
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - api1
+      - api2
+    networks:
+      - my-networks
+
+  worker:
+    build: workertrasaction/
+    # restart: always
+    networks:
+      - my-networks
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - DB_HOST=${DB_HOST}
+      - RABBIT_HOST=${RABBIT_HOST}
+    env_file:
+      - .env
+  
+  scheduler:
+    build: transaction_scheduler/
+    networks:
+      - my-networks
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - DB_HOST=${DB_HOST}
+      - RABBIT_HOST=${RABBIT_HOST}
+    env_file:
+      - .env
+
+    
+
+networks:
+  my-networks:
+    driver: bridge

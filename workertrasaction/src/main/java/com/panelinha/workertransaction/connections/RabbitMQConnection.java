@@ -16,9 +16,8 @@ public class RabbitMQConnection {
     private static final String EXCHANGE_NAME = "amq.direct";
     private AmqpAdmin amqpAdmin = null;
 
-
     public RabbitMQConnection() {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory(System.getenv("RABBIT_HOST"));
         connectionFactory.setUsername("birico");
         connectionFactory.setPassword("biricoseguro");
 

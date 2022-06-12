@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class PiEsApplication {
 
     public static void main(String[] args) {
+        System.out.println(System.getenv("RABBIT_HOST"));
         SpringApplication.run(PiEsApplication.class, args);
     }
 

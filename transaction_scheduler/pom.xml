@@ -14,7 +14,7 @@
     <name>transaction_scheduler</name>
     <description>transaction_scheduler</description>
     <properties>
-        <java.version>18</java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
         <dependency>

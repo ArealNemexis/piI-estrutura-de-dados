@@ -24,4 +24,4 @@ except IndexError as e:
     print('A')
 else:
     for _ in range(NUM_OF_TRANSACTIONS):
-        requests.post(url=URL, json=generate_transaction(100))
+        requests.post(url=URL, json=generate_transaction(10000))
