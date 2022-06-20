@@ -1,0 +1,104 @@
+version: '2.4'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    cpu_count: 1
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - my-networks
+#    volumes:
+#      - ./data:/var/lib/rabbitmq/
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBIT_USERNAME}
+      - RABBITMQ_DEFAULT_PASS=${RABBIT_PASSWORD}
+    env_file:
+      - .env
+
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    cpu_count: 1
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    networks:
+      - my-networks
+    env_file:
+      - .env
+    volumes:
+      - ./postgres:/data/postgres
+
+
+  api1:
+    build: api/
+    cpu_count: 1
+    hostname: api1
+    # restart: always 
+    networks:
+      - my-networks
+    environment:
+      - CREATE_DB=create
+    env_file:
+      - .env
+
+  api2:
+    build: api/
+    hostname: api2
+    cpu_count: 1
+    # restart: always 
+    networks:
+      - my-networks
+    environment:
+      - CREATE_DB=none
+    env_file:
+      - .env
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - api1
+      - api2
+    networks:
+      - my-networks
+
+  worker:
+    build: workertrasaction/
+    cpu_count: 1
+    # restart: always
+    networks:
+      - my-networks
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - DB_HOST=${DB_HOST}
+      - RABBIT_HOST=${RABBIT_HOST}
+    env_file:
+      - .env
+  
+  scheduler:
+    build: transaction_scheduler/
+    cpu_count: 1
+    networks:
+      - my-networks
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - DB_HOST=${DB_HOST}
+      - RABBIT_HOST=${RABBIT_HOST}
+    env_file:
+      - .env
+
+    
+
+networks:
+  my-networks:
+    driver: bridge

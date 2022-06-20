@@ -1,0 +1,86 @@
+6 cores
+1 minuto 
+2046
+1646
+2202
+1616
+Media 1,877,5
+
+
+2 cores
+
+1 minuto
+2866
+2901
+2964
+2767
+
+6 cores 15 gb 10429
+
+
+
+1 cores 1 gb 2 min 5210
+
+1 cores 15 gb 2 min 5342
+
+3 cores 15 gb 2 min 11177
+
+4 cores 15 gb 2 min 11502
+
+cpu_count
+
+1 core 1 gb 2 min 5374
+
+
+
+
+2 replicas worker 4047 - 2023/worker
+
+4 replicas worker 26180 - 6545/worker
+
+---------------------
+2 replicas worker 
+	15380 - 7690/worker
+	19580 - 9790/worker
+	19449 - 9724/worker
+	20004 - 10002/worker
+m  18603 - 9301/worker
+
+
+4 replicas worker
+	28024 - 7006/worker
+	28561 - 7140/worker
+	26015 - 6503/worker
+	27619 - 6904/worker
+m  27554 - 6888/worker
+
+6 replicas worker
+    42768 - 7128/worker
+    41910 - 6985/worker
+    43236 - 7206/worker
+    40176 - 6696/worker
+m   42022 - 7003/worker
+
+---------------- 20/06/2022
+
+2 replicas worker
+   18107 - 9053/worker
+   19477 - 9738/worker
+   17062 - 8531/worker
+
+
+4 replicas worker
+   25281 - 6320/worker
+   24824 - 6206/worker
+   25182 - 6295/worker
+   28666 - 7166/worker
+m  25988 - 6496/worker
+
+
+6 replicas worker
+    22761 - 3793/worker
+    26774 - 4462/worker
+    25501 - 4250/worker
+    25255 - 4209/worker
+    23125 - 3854/worker
+m   24683 - 4113/worker

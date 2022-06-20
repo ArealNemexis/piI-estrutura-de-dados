@@ -4,6 +4,7 @@ package com.panelinha.transaction_scheduler.processors;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.panelinha.transaction_scheduler.constants.RabbitMQConstants;
+import com.panelinha.transaction_scheduler.constants.StatusEnum;
 import com.panelinha.transaction_scheduler.dto.TransactionDTO;
 import com.panelinha.transaction_scheduler.service.RabbitMQService;
 import com.panelinha.transaction_scheduler.service.TransactionService;
@@ -29,8 +30,12 @@ public class EnqueuePendingTransaction {
         transactionDTOList.forEach(transactionDTO -> {
             try {
                 var json = objectMapper.writeValueAsString(transactionDTO);
+                System.out.println("Mudando pra enqueued");
+                transactionService.changeStatus(transactionDTO, StatusEnum.ENQUEUED);
                 rabbitMQService.sendMessage(RabbitMQConstants.PENDING, json);
             } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
